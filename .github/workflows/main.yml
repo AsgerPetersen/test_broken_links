@@ -1,0 +1,27 @@
+name: Broken Links Checker
+on:
+  schedule:
+    #- cron:  '12 1 * * 5'
+    - cron:  '*/10 * * * *'
+  workflow_dispatch:
+env:
+  WEBSITE_URL: "https://www.septima.dk"
+  ISSUE_TEMPLATE: ".github/workflows/check-broken-links.md"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run Broken Links Checker
+      run: npx broken-link-checker $WEBSITE_URL --ordered --recursive --user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" --exclude linkedin --exclude "twitter.com" --exclude user_gregers
+
+    - uses: actions/checkout@v3
+      if: failure()
+
+    - uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        filename: ${{ env.ISSUE_TEMPLATE }}
+      if: failure()
