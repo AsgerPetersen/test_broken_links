@@ -16,6 +16,9 @@ jobs:
       issues: write
 
     steps:
+    # Ekskluder linkedin og twitter, da er vanskelige at detektere korrekt. 
+    # user_gregers fordi den er gammel og har mange broken links
+    # nyheder da de gamle ofte peger på eksterne broken links, men vi vil stadig gerne have nyheden og teksten
     - name: Run Broken Links Checker
       run: |
         npx broken-link-checker $WEBSITE_URL \
@@ -25,6 +28,7 @@ jobs:
           --exclude linkedin \
           --exclude "twitter.com" \
           --exclude user_gregers
+          --exclude "septima.dk/nyheder"
 
     - uses: actions/checkout@v3
       if: failure()
