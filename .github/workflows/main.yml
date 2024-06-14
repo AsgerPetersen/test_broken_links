@@ -28,7 +28,7 @@ jobs:
           --exclude linkedin \
           --exclude "twitter.com" \
           --exclude user_gregers \
-          --exclude "septima.dk/nyheder/*"
+          --exclude "septima.dk/nyheder/**"
 
     - uses: actions/checkout@v3
       if: failure()
