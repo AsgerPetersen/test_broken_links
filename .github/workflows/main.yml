@@ -17,13 +17,14 @@ jobs:
 
     steps:
     - name: Run Broken Links Checker
-      run: npx broken-link-checker $WEBSITE_URL \
-            --ordered \
-            --recursive \
-            --user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" \
-            --exclude linkedin \
-            --exclude "twitter.com" \
-            --exclude user_gregers
+      run: |
+        npx broken-link-checker $WEBSITE_URL \
+          --ordered \
+          --recursive \
+          --user-agent "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36" \
+          --exclude linkedin \
+          --exclude "twitter.com" \
+          --exclude user_gregers
 
     - uses: actions/checkout@v3
       if: failure()
